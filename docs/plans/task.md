@@ -5,4 +5,4 @@
 | Propose 2-3 approaches | Completed | Selected Approach A: Flexible Accordion-based Ending Note |
 | Present design sections | Completed | Presented design sections with Privacy & LocalStorage guarantee |
 | Write design doc | Completed | Saved to `docs/plans/2026-08-01-tsuru-ending-note-design.md` |
-| Transition to implementation | In Progress | Implementing `docs/plans/2026-08-01-tsuru-ending-note.md` |
+| Transition to implementation | Completed | Implemented in index.html, main.css, print.css, app.js and pushed to GitHub |
