@@ -493,6 +493,7 @@
     initFilters();
     renderAllProcedures();
     initEndingNote();
+    attachAccordionEvents(document);
     initGlobalEvents();
     updateProgressSummary();
   });
@@ -826,16 +827,26 @@
 
   // 改善5: アコーディオン展開/折りたたみ
   function attachAccordionEvents(container) {
+    if (!container) return;
     const headers = container.querySelectorAll('[data-accordion-toggle]');
     headers.forEach(header => {
+      if (header.dataset.accordionBound) return;
+      header.dataset.accordionBound = "true";
+
       header.addEventListener('click', (e) => {
-        // チェックボックスクリック時はアコーディオンを動かさない
-        if (e.target.classList.contains('check-input')) return;
-        const body = header.nextElementSibling;
-        const arrow = header.querySelector('.accordion-arrow');
+        if (e.target && e.target.classList.contains('check-input')) return;
+        
+        const card = header.closest('.procedure-item') || header.closest('.card') || header.parentElement;
+        if (!card) return;
+
+        const body = card.querySelector('.procedure-body');
+        const arrow = card.querySelector('.accordion-arrow');
+
         if (body) {
-          body.classList.toggle('collapsed');
-          if (arrow) arrow.textContent = body.classList.contains('collapsed') ? '▼' : '▲';
+          const isCollapsed = body.classList.toggle('collapsed');
+          if (arrow) {
+            arrow.textContent = isCollapsed ? '▼' : '▲';
+          }
         }
       });
     });
