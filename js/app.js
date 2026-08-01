@@ -499,6 +499,11 @@
 
   // --- エンディングノート管理機能 ---
   function initEndingNote() {
+    const endingNoteContainer = document.getElementById('tab-endingnote');
+    if (endingNoteContainer) {
+      attachAccordionEvents(endingNoteContainer);
+    }
+
     const inputs = document.querySelectorAll('.note-input');
     const noteData = loadEndingNoteData();
 
