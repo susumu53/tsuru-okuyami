@@ -677,3 +677,50 @@ button {
   width: 100%;
   box-shadow: var(--shadow-lg);
 }
+
+/* --- 15. エンディングノート ＆ フォームUI --- */
+.security-banner {
+  background-color: var(--primary-light);
+  border-left: 5px solid var(--primary-color);
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 0.8rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.form-control {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-sm);
+  background-color: var(--surface-color);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(44, 110, 73, 0.15);
+}

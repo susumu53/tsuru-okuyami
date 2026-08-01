@@ -1,7 +1,8 @@
 | Task | Status | Details |
 |---|---|---|
-| Gitリポジトリ初期化 & .gitignore作成 | Completed | Initialized git repo with main branch & ignore rules |
-| 機能拡張A: 英語/日本語 簡易切り替え機能 | Completed | Added language toggle button & multilingual notice |
-| 機能拡張B: 相続・法務手続の厳格な期限ガイド | Completed | Highlighted 3ヶ月(放棄)/4ヶ月(準確定申告)/10ヶ月(相続税) deadlines |
-| 機能拡張C: 市民フィードバック/お問合せダイアログ | Completed | Implemented user feedback modal & submission handler |
-| 成果物の最終確認 & コミット | Completed | Verified JavaScript syntax & created initial commit on main branch |
+| Explore project context & research Tsuru ending note best practices | Completed | Researched Tsuru community care center & ending note best practices |
+| Ask clarifying questions | Completed | Selected Option 1: Integrate into existing app as "Tsuru Okuyami & Shukatsu Portal" |
+| Propose 2-3 approaches | Completed | Selected Approach A: Flexible Accordion-based Ending Note |
+| Present design sections | Completed | Presented design sections with Privacy & LocalStorage guarantee |
+| Write design doc | Completed | Saved to `docs/plans/2026-08-01-tsuru-ending-note-design.md` |
+| Transition to implementation | In Progress | Implementing `docs/plans/2026-08-01-tsuru-ending-note.md` |

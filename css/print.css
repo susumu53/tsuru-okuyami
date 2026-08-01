@@ -100,6 +100,21 @@
     height: 16px;
   }
 
+  /* フォーム要素の印刷最適化 */
+  .form-control {
+    border: none !important;
+    border-bottom: 1px solid #000000 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 2px 0 !important;
+    font-size: 10.5pt !important;
+    color: #000000 !important;
+  }
+
+  .accordion-arrow {
+    display: none !important;
+  }
+
   .site-footer {
     background: none !important;
     color: #666666 !important;

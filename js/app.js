@@ -376,6 +376,28 @@
   const STORAGE_KEY_CHECKED = "tsuru_okuyami_checked_items";
   const STORAGE_KEY_ANSWERS = "tsuru_okuyami_answers";
   const STORAGE_KEY_FONT_SIZE = "tsuru_okuyami_font_size";
+  const STORAGE_KEY_ENDING_NOTE = "tsuru_ending_note_data";
+
+  function loadEndingNoteData() {
+    try {
+      const data = localStorage.getItem(STORAGE_KEY_ENDING_NOTE);
+      return data ? JSON.parse(data) : {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveEndingNoteData(data) {
+    try {
+      localStorage.setItem(STORAGE_KEY_ENDING_NOTE, JSON.stringify(data));
+    } catch (e) {}
+  }
+
+  function clearEndingNoteData() {
+    try {
+      localStorage.removeItem(STORAGE_KEY_ENDING_NOTE);
+    } catch (e) {}
+  }
 
   function loadCheckedItems() {
     try {
@@ -470,9 +492,76 @@
     initWizard();
     initFilters();
     renderAllProcedures();
+    initEndingNote();
     initGlobalEvents();
     updateProgressSummary();
   });
+
+  // --- エンディングノート管理機能 ---
+  function initEndingNote() {
+    const inputs = document.querySelectorAll('.note-input');
+    const noteData = loadEndingNoteData();
+
+    // データ復元
+    inputs.forEach(input => {
+      const key = input.getAttribute('data-key');
+      if (key && noteData[key] !== undefined) {
+        input.value = noteData[key];
+      }
+
+      // リアルタイム自動保存
+      const saveHandler = () => {
+        const currentData = loadEndingNoteData();
+        currentData[key] = input.value;
+        saveEndingNoteData(currentData);
+        updateEndingNoteProgress();
+      };
+
+      input.addEventListener('input', saveHandler);
+      input.addEventListener('change', saveHandler);
+    });
+
+    updateEndingNoteProgress();
+
+    // 印刷ボタン
+    const btnPrint = document.getElementById('btn-print-note');
+    if (btnPrint) {
+      btnPrint.addEventListener('click', () => {
+        window.print();
+      });
+    }
+
+    // クリアボタン
+    const btnClear = document.getElementById('btn-clear-note');
+    if (btnClear) {
+      btnClear.addEventListener('click', () => {
+        if (confirm('エンディングノートに入力したすべての内容をクリアしますか？\n（この操作は元に戻せません）')) {
+          clearEndingNoteData();
+          inputs.forEach(input => { input.value = ''; });
+          updateEndingNoteProgress();
+          alert('エンディングノートの内容をクリアしました。');
+        }
+      });
+    }
+  }
+
+  function updateEndingNoteProgress() {
+    const inputs = document.querySelectorAll('.note-input');
+    const bar = document.getElementById('note-progress-bar');
+    const text = document.getElementById('note-progress-text');
+    if (!inputs.length || !bar || !text) return;
+
+    let filledCount = 0;
+    inputs.forEach(input => {
+      if (input.value && input.value.trim() !== '') {
+        filledCount++;
+      }
+    });
+
+    const percent = Math.round((filledCount / inputs.length) * 100);
+    bar.style.width = `${percent}%`;
+    text.textContent = `${percent}% (${filledCount}/${inputs.length}項目記入済み)`;
+  }
 
   function initDateHeader() {
     const dateEl = document.getElementById('print-date');

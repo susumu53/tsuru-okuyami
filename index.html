@@ -54,6 +54,7 @@
   <nav class="main-tabs-nav" aria-label="主要機能切り替え">
     <div class="tabs-container">
       <button class="tab-btn active" data-tab="tab-wizard">🔍 簡単ナビ</button>
+      <button class="tab-btn" data-tab="tab-endingnote">📝 エンディングノート</button>
       <button class="tab-btn" data-tab="tab-timeline">📅 やること順序</button>
       <button class="tab-btn" data-tab="tab-list">📋 手続き一覧</button>
       <button class="tab-btn" data-tab="tab-contact">🏛️ 窓口案内</button>
@@ -90,6 +91,266 @@
         <div style="text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
           <button id="btn-retry-wizard" class="btn-secondary">🔄 もう一度診断する</button>
         </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: 都留市エンディングノート -->
+    <section id="tab-endingnote" class="tab-panel">
+      <!-- 🔒 個人情報保護・安全安心バナー -->
+      <div class="card security-banner">
+        <div style="display: flex; align-items: flex-start; gap: 0.8rem;">
+          <span style="font-size: 1.5rem;">🔒</span>
+          <div>
+            <strong style="color: var(--primary-color); font-size: 1.05rem;">【安心・安全に関するお知らせ】</strong>
+            <p style="font-size: 0.9rem; margin-top: 0.3rem; line-height: 1.6;">
+              本エンディングノートに入力されたお名前や医療・資産等のすべての情報は、<strong>お使いのスマートフォン・パソコンのブラウザ内（LocalStorage）にのみ自動保存</strong>されます。<br>
+              外部のサーバーや第三者にデータが送信されることは一切ありませんので、安心してお書きください。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- エンディングノートヘッダー ＆ 完成度メーター -->
+      <div class="card">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
+          <div>
+            <h2 class="card-title">📝 都留市 わたしのエンディングノート</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">万が一の際に備え、自分らしい希望や大切な人への想いを少しずつ書き残しましょう。</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;" class="no-print">
+            <button id="btn-print-note" class="btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+              🖨️ ノートをA4印刷/PDF出力
+            </button>
+            <button id="btn-clear-note" class="btn-secondary" style="padding: 0.5rem 0.8rem; font-size: 0.85rem; color: var(--status-urgent);">
+              🗑️ ノート消去
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 700; color: var(--secondary-color); margin-bottom: 0.4rem;">
+            <span>記入完成度</span>
+            <span id="note-progress-text">0%</span>
+          </div>
+          <div class="progress-bar-container">
+            <div id="note-progress-bar" class="progress-bar" style="width: 0%; background: linear-gradient(90deg, var(--primary-color), var(--status-success));"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5つの章アコーディオンフォーム -->
+      <div id="endingnote-form-container">
+        
+        <!-- 第1章：私自身のこと -->
+        <div class="card procedure-item">
+          <div class="procedure-header" data-accordion-toggle>
+            <div class="procedure-header-info">
+              <div class="procedure-badges"><span class="badge badge-category">第1章</span></div>
+              <div class="procedure-title">👤 私自身のこと（基本情報・緊急連絡先） <span class="accordion-arrow">▼</span></div>
+            </div>
+          </div>
+          <div class="procedure-body collapsed">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">お名前（氏名）</label>
+                <input type="text" class="form-control note-input" data-key="name" placeholder="例：都留 太郎">
+              </div>
+              <div class="form-group">
+                <label class="form-label">フリガナ</label>
+                <input type="text" class="form-control note-input" data-key="kana" placeholder="例：ツル タロウ">
+              </div>
+              <div class="form-group">
+                <label class="form-label">生年月日</label>
+                <input type="date" class="form-control note-input" data-key="birthdate">
+              </div>
+              <div class="form-group">
+                <label class="form-label">血液型</label>
+                <select class="form-control note-input" data-key="bloodtype">
+                  <option value="">選択してください</option>
+                  <option value="A型">A型</option>
+                  <option value="B型">B型</option>
+                  <option value="O型">O型</option>
+                  <option value="AB型">AB型</option>
+                  <option value="不明">不明</option>
+                </select>
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">住所</label>
+                <input type="text" class="form-control note-input" data-key="address" placeholder="例：山梨県都留市上谷一丁目1番1号">
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">本籍地</label>
+                <input type="text" class="form-control note-input" data-key="honseki" placeholder="例：山梨県都留市...">
+              </div>
+            </div>
+
+            <h4 style="margin: 1.2rem 0 0.6rem; color: var(--secondary-color); font-size: 1rem;">📞 緊急連絡先</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">緊急連絡先①（氏名・続柄）</label>
+                <input type="text" class="form-control note-input" data-key="contact1_name" placeholder="例：都留 花子（長女）">
+              </div>
+              <div class="form-group">
+                <label class="form-label">電話番号</label>
+                <input type="tel" class="form-control note-input" data-key="contact1_phone" placeholder="例：090-XXXX-XXXX">
+              </div>
+              <div class="form-group">
+                <label class="form-label">緊急連絡先②（氏名・続柄）</label>
+                <input type="text" class="form-control note-input" data-key="contact2_name" placeholder="例：都留 一郎（長男）">
+              </div>
+              <div class="form-group">
+                <label class="form-label">電話番号</label>
+                <input type="tel" class="form-control note-input" data-key="contact2_phone" placeholder="例：090-XXXX-XXXX">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第2章：医療 ＆ 介護の希望 -->
+        <div class="card procedure-item">
+          <div class="procedure-header" data-accordion-toggle>
+            <div class="procedure-header-info">
+              <div class="procedure-badges"><span class="badge badge-category">第2章</span></div>
+              <div class="procedure-title">🏥 医療 ＆ 介護の希望 <span class="accordion-arrow">▼</span></div>
+            </div>
+          </div>
+          <div class="procedure-body collapsed">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">かかりつけ医療機関名</label>
+                <input type="text" class="form-control note-input" data-key="doctor_hospital" placeholder="例：都留市立病院">
+              </div>
+              <div class="form-group">
+                <label class="form-label">主治医・電話番号</label>
+                <input type="text" class="form-control note-input" data-key="doctor_phone" placeholder="例：内科 ○○先生（0554-45-1811）">
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">持病・アレルギー・常用薬メモ</label>
+                <textarea class="form-control note-input" data-key="medical_notes" rows="2" placeholder="例：高血圧の薬を朝服用、ペニシリン系アレルギーあり"></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">介護が必要になった時の希望</label>
+                <select class="form-control note-input" data-key="care_preference">
+                  <option value="">選択してください</option>
+                  <option value="できる限り自宅で介護を受けたい">できる限り自宅で介護を受けたい</option>
+                  <option value="介護施設に入所したい">都留市内などの介護施設に入所したい</option>
+                  <option value="家族の判断に任せたい">家族の判断に任せたい</option>
+                </select>
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">延命医療に関する意思表示</label>
+                <select class="form-control note-input" data-key="life_support">
+                  <option value="">選択してください</option>
+                  <option value="無理な延命治療は望まず、自然な最期を希望する">無理な延命治療は望まず、自然な最期を希望する</option>
+                  <option value="可能な限りの延命治療を行ってほしい">可能な限りの延命治療を行ってほしい</option>
+                  <option value="家族・医師の判断に委ねる">家族・医師の判断に委ねる</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第3章：葬儀 ＆ お墓の希望 -->
+        <div class="card procedure-item">
+          <div class="procedure-header" data-accordion-toggle>
+            <div class="procedure-header-info">
+              <div class="procedure-badges"><span class="badge badge-category">第3章</span></div>
+              <div class="procedure-title">🕊️ 葬儀 ＆ お墓の希望 <span class="accordion-arrow">▼</span></div>
+            </div>
+          </div>
+          <div class="procedure-body collapsed">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">葬儀の規模・形式の希望</label>
+                <select class="form-control note-input" data-key="funeral_type">
+                  <option value="">選択してください</option>
+                  <option value="家族葬（近親者のみ）">家族葬（近親者のみ）</option>
+                  <option value="一般葬（知人・地域の方も招待）">一般葬（知人・地域の方も招待）</option>
+                  <option value="直葬・火葬式（通夜・告別式なし）">直葬・火葬式（通夜・告別式なし）</option>
+                  <option value="家族の判断に任せる">家族の判断に任せる</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">宗教・宗派</label>
+                <input type="text" class="form-control note-input" data-key="religion" placeholder="例：仏教（○宗）、無宗派">
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">火葬場に関する希望</label>
+                <input type="text" class="form-control note-input" data-key="crematorium_pref" placeholder="例：都留市火葬場「ゆうきゅうの丘つる」を利用希望">
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">お墓・納骨先の希望</label>
+                <textarea class="form-control note-input" data-key="grave_info" rows="2" placeholder="例：○○寺 代々のお墓へ納骨、樹木葬を希望 など"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第4章：財産 ＆ デジタル遺品の整理 -->
+        <div class="card procedure-item">
+          <div class="procedure-header" data-accordion-toggle>
+            <div class="procedure-header-info">
+              <div class="procedure-badges"><span class="badge badge-category">第4章</span></div>
+              <div class="procedure-title">💰 財産 ＆ デジタル遺品の整理 <span class="accordion-arrow">▼</span></div>
+            </div>
+          </div>
+          <div class="procedure-body collapsed">
+            <p style="font-size: 0.85rem; color: var(--status-urgent); margin-bottom: 0.8rem;">
+              ⚠️ 安全のため、キャッシュカードの暗証番号やパスワードは絶対にここへ書き込まないでください。
+            </p>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="form-label">主要な口座（銀行名・支店名）</label>
+                <textarea class="form-control note-input" data-key="bank_accounts" rows="2" placeholder="例：山梨中央銀行 都留支店、都留信用組合 本店、JAつる"></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">加入保険会社名</label>
+                <input type="text" class="form-control note-input" data-key="insurance_companies" placeholder="例：日本生命、かんぽ生命、県民共済">
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">所有している不動産・自動車</label>
+                <input type="text" class="form-control note-input" data-key="assets_property" placeholder="例：都留市上谷の自宅土地家屋、軽自動車1台">
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">スマホ・パソコン・サブスクの解約希望</label>
+                <textarea class="form-control note-input" data-key="digital_assets" rows="2" placeholder="例：ドコモの携帯解約、写真データは家族に保存してほしい"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第5章：大切な人へのメッセージ ＆ 保管場所 -->
+        <div class="card procedure-item">
+          <div class="procedure-header" data-accordion-toggle>
+            <div class="procedure-header-info">
+              <div class="procedure-badges"><span class="badge badge-category">第5章</span></div>
+              <div class="procedure-title">✉️ 大切な人へのメッセージ ＆ 都留市相談窓口 <span class="accordion-arrow">▼</span></div>
+            </div>
+          </div>
+          <div class="procedure-body collapsed">
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="form-label">家族や大切な人へ伝えたい想い・メッセージ</label>
+                <textarea class="form-control note-input" data-key="family_message" rows="4" placeholder="例：いつもありがとう。自分らしい人生を送ることができました。体に気を付けて元気に暮らしてください。"></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">このノートの印刷物・存在を伝えている相手</label>
+                <input type="text" class="form-control note-input" data-key="note_shared_with" placeholder="例：長女（花子）にノートを印刷して渡してある、自宅金庫内に保管">
+              </div>
+            </div>
+
+            <!-- 都留市地域包括支援センター案内 -->
+            <div style="margin-top: 1.2rem; padding: 1rem; background-color: var(--primary-light); border-radius: var(--radius-sm); border-left: 4px solid var(--primary-color);">
+              <h4 style="color: var(--primary-color); font-size: 0.95rem; margin-bottom: 0.3rem;">🤝 終活に関する都留市の公式相談窓口</h4>
+              <p style="font-size: 0.85rem; line-height: 1.6;">
+                介護や今後の生活、終活ノートの書き方について不安がある場合は、お気軽に地域包括支援センターへご相談ください。<br>
+                <strong>都留市地域包括支援センター（いきいきプラザ都留内）</strong><br>
+                電話：<a href="tel:0554-46-5114" style="font-weight: 700;">0554-46-5114</a>（〒402-0051 都留市下谷2516-1）
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
