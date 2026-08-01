@@ -1,0 +1,679 @@
+/* ==========================================================================
+   都留市 お悔やみハンドブック - メインデザインシステム CSS
+   ========================================================================== */
+
+/* --- 1. CSS変数 (デザインシステム) --- */
+:root {
+  --primary-color: #2c6e49;
+  --primary-hover: #1e5235;
+  --primary-light: #e8f3ed;
+  --secondary-color: #1a365d;
+  --secondary-hover: #0f233d;
+  --background-color: #f8f9fa;
+  --surface-color: #ffffff;
+  --text-main: #212529;
+  --text-muted: #6c757d;
+  --text-light: #f8f9fa;
+  --border-color: #e9ecef;
+  --border-dark: #ced4da;
+  
+  --status-urgent: #dc2626;
+  --status-warning: #d97706;
+  --status-normal: #2563eb;
+  --status-success: #10b981;
+  
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  
+  --font-base: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-scale: 1;
+}
+
+/* 文字サイズ大モード */
+body.font-large {
+  --font-scale: 1.15;
+}
+
+/* --- 2. リセット ＆ 基本スタイル --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: calc(16px * var(--font-scale));
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-base);
+  line-height: 1.7;
+  color: var(--text-main);
+  background-color: var(--background-color);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* --- 3. ヘッダー ＆ ナビゲーション --- */
+.site-header {
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  color: var(--text-light);
+  padding: 1.5rem 1rem 1rem;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.brand-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-font-toggle, .btn-print, .btn-reset {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--text-light);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn-font-toggle:hover, .btn-print:hover, .btn-reset:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* メインナビゲーションタブ */
+.main-tabs-nav {
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 70px;
+  z-index: 90;
+  box-shadow: var(--shadow-sm);
+}
+
+.tabs-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs-container::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-btn {
+  padding: 1rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: var(--primary-color);
+}
+
+.tab-btn.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+  background-color: var(--primary-light);
+}
+
+/* --- 4. レイアウト ＆ コンテナ --- */
+.main-content {
+  max-width: 1000px;
+  margin: 1.5rem auto 3rem;
+  padding: 0 1rem;
+}
+
+.tab-panel {
+  display: none;
+}
+.tab-panel.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* カード共通 */
+.card {
+  background-color: var(--surface-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  color: var(--secondary-color);
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* --- 5. ステップ型簡単ナビゲーション --- */
+.wizard-header {
+  background: linear-gradient(135deg, var(--primary-light), #f0f7f3);
+  border-left: 5px solid var(--primary-color);
+}
+
+.progress-bar-container {
+  height: 8px;
+  background-color: var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+.progress-bar {
+  height: 100%;
+  background-color: var(--primary-color);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.question-box {
+  margin-top: 1rem;
+}
+
+.question-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.8rem;
+}
+
+.option-card {
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: var(--surface-color);
+}
+
+.option-card:hover {
+  border-color: var(--primary-color);
+  background-color: var(--primary-light);
+}
+
+.option-card.selected {
+  border-color: var(--primary-color);
+  background-color: var(--primary-light);
+  font-weight: 700;
+  box-shadow: 0 0 0 3px rgba(44, 110, 73, 0.15);
+}
+
+.option-card input[type="radio"],
+.option-card input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-color);
+}
+
+.wizard-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-secondary {
+  background-color: var(--border-color);
+  color: var(--text-main);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+.btn-secondary:hover {
+  background-color: var(--border-dark);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+/* --- 6. 手続きカード・リスト --- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.filter-chip {
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-dark);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.filter-chip.active {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  border-color: var(--primary-color);
+}
+
+.procedure-item {
+  background-color: var(--surface-color);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.procedure-item:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.procedure-item.checked {
+  background-color: #f4faf6;
+  border-color: #a7f3d0;
+}
+
+.procedure-header {
+  padding: 1.2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.check-input {
+  width: 22px;
+  height: 22px;
+  margin-top: 3px;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.procedure-header-info {
+  flex: 1;
+}
+
+.procedure-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.badge-deadline-7days { background-color: #fee2e2; color: #991b1b; }
+.badge-deadline-14days { background-color: #fef3c7; color: #92400e; }
+.badge-deadline-midterm { background-color: #dbeafe; color: #1e40af; }
+.badge-deadline-longterm { background-color: #f3e8ff; color: #6b21a8; }
+.badge-category { background-color: #f1f5f9; color: #475569; }
+
+.procedure-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.procedure-item.checked .procedure-title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.procedure-body {
+  padding: 0 1.2rem 1.2rem 3.2rem;
+  border-top: 1px dashed var(--border-color);
+  margin-top: 0.5rem;
+  padding-top: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+  margin: 0.8rem 0;
+  background-color: var(--background-color);
+  padding: 0.8rem;
+  border-radius: var(--radius-sm);
+}
+
+.info-item-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.info-item-value {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.items-needed-list {
+  margin-left: 1.2rem;
+  margin-top: 0.4rem;
+}
+
+/* --- 7. 窓口・アクセスカード --- */
+.contact-card {
+  border-left: 4px solid var(--secondary-color);
+}
+
+.contact-phone {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 0.4rem 0;
+}
+
+/* --- 8. フッター --- */
+.site-footer {
+  background-color: var(--secondary-color);
+  color: var(--text-light);
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+  font-size: 0.85rem;
+}
+
+/* --- 9. レスポンシブ対応 --- */
+@media (max-width: 600px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .header-controls {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+  .procedure-body {
+    padding-left: 1.2rem;
+  }
+  .timeline-item {
+    padding-left: 2.5rem;
+  }
+}
+
+/* --- 10. 進捗サマリーバー（改善7） --- */
+.progress-summary-bar {
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  position: sticky;
+  top: 70px;
+  z-index: 95;
+  box-shadow: var(--shadow-sm);
+}
+
+.progress-summary-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.progress-summary-track {
+  flex: 1;
+  height: 10px;
+  background-color: var(--border-color);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-summary-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--status-success));
+  width: 0%;
+  transition: width 0.4s ease;
+  border-radius: 5px;
+}
+
+/* --- 11. タイムラインUI（改善1） --- */
+.timeline {
+  position: relative;
+  padding-left: 3rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 1.1rem;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--status-urgent), var(--status-warning), var(--primary-color), var(--secondary-color));
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 1.5rem;
+  background-color: var(--surface-color);
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1.5rem;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -2.6rem;
+  top: 1.2rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  z-index: 2;
+}
+
+.timeline-immediate .timeline-marker {
+  background-color: var(--status-urgent);
+}
+
+.timeline-week .timeline-marker {
+  background-color: var(--status-warning);
+}
+
+.timeline-month .timeline-marker {
+  background-color: var(--status-normal);
+}
+
+.timeline-longterm .timeline-marker {
+  background-color: var(--secondary-color);
+}
+
+.timeline-phase {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.4rem;
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+}
+
+.timeline-immediate .timeline-phase {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.timeline-week .timeline-phase {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.timeline-month .timeline-phase {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.timeline-longterm .timeline-phase {
+  background-color: #f3e8ff;
+  color: #6b21a8;
+}
+
+.timeline-content h3 {
+  font-size: 1.1rem;
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-content ul {
+  margin-left: 1.2rem;
+  line-height: 1.8;
+}
+
+.timeline-content ul ul {
+  margin-top: 0.2rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* --- 12. アコーディオン（改善5） --- */
+.procedure-body.collapsed {
+  display: none;
+}
+
+.accordion-arrow {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-left: 0.4rem;
+  transition: transform 0.2s ease;
+}
+
+.procedure-header[data-accordion-toggle] {
+  cursor: pointer;
+}
+
+/* --- 13. 委任状注意表示（改善8） --- */
+.delegate-note {
+  margin-top: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  background-color: #fef3c7;
+  border-left: 4px solid var(--status-warning);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: #92400e;
+}
+
+/* --- 14. モーダルダイアログ --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-card {
+  background-color: var(--surface-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+}

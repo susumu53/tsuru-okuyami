@@ -1,0 +1,118 @@
+/* ==========================================================================
+   都留市 お悔やみハンドブック - 印刷・PDF出力最適化 CSS
+   ========================================================================== */
+
+@media print {
+  /* 非表示要素 */
+  .site-header,
+  .main-tabs-nav,
+  .header-controls,
+  .wizard-actions,
+  .filter-bar,
+  .btn-font-toggle,
+  .btn-print,
+  .btn-reset,
+  .no-print {
+    display: none !important;
+  }
+
+  /* 印刷基本設定 */
+  @page {
+    size: A4 portrait;
+    margin: 15mm 15mm 15mm 15mm;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  .main-content {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .tab-panel {
+    display: block !important; /* 印刷時は内容を出力 */
+  }
+
+  /* 印刷ヘッダー（Web画面では非表示、印刷時のみ自動生成） */
+  .print-only-header {
+    display: block !important;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+  }
+
+  .print-only-header h1 {
+    font-size: 18pt;
+    margin-bottom: 4px;
+  }
+
+  .print-only-header p {
+    font-size: 9pt;
+    color: #444444;
+  }
+
+  /* カード・手続アイテム表示 */
+  .card, .procedure-item {
+    border: 1px solid #cccccc !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    margin-bottom: 12px !important;
+    background: #ffffff !important;
+    padding: 10px 12px !important;
+  }
+
+  .procedure-header {
+    padding: 0 !important;
+  }
+
+  .procedure-body {
+    display: block !important; /* 全て展開 */
+    padding: 8px 0 0 24px !important;
+    border-top: 1px dotted #ccc !important;
+  }
+
+  .procedure-title {
+    font-size: 12pt !important;
+    color: #000000 !important;
+  }
+
+  .badge {
+    border: 1px solid #000000 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .info-grid {
+    background: #f9f9f9 !important;
+    border: 1px solid #e0e0e0 !important;
+    padding: 6px !important;
+  }
+
+  /* チェックボックス */
+  .check-input {
+    width: 16px;
+    height: 16px;
+  }
+
+  .site-footer {
+    background: none !important;
+    color: #666666 !important;
+    border-top: 1px solid #ccc !important;
+    padding-top: 10px !important;
+    margin-top: 20px !important;
+    font-size: 8pt !important;
+  }
+}
+
+/* 画面表示時は印刷専用ヘッダーを隠す */
+@media screen {
+  .print-only-header {
+    display: none;
+  }
+}
